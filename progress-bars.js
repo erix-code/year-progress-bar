@@ -7,12 +7,16 @@ document.addEventListener("DOMContentLoaded", function() {
     console.log(labelProgressBarYear);
     function getYearPercentage() {
         // Getting the current date
-        const totalYearDays = 365;
         const currentTime = new Date();
         const currentYear = currentTime.getFullYear()      // Get the four digit year (yyyy)
         const nextYearValue = currentYear + 1;
         // Time of the next year  in miliseconds
         const nextYearDate = new Date("01/01/"+nextYearValue.toString()).getTime()
+
+        // Fixing bug of leap year
+        const startDate = new Date("01/01/"+ currentYear.toString())
+        const totalYearDays = ((nextYearDate - startDate)/1000) /86400;
+
         // diff in time and then we convert the diff to days
         const diffInDays = ((nextYearDate - currentTime.getTime()) / 1000) / 86400;
         const currentDayOfYear = totalYearDays - diffInDays;
