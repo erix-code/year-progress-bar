@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const currentDayOfYear = totalYearDays - diffInDays;
 
         // get percentage of the year
-        const percentage = (100 * currentDayOfYear) / totalYearDays;
+        const percentage = parseFloat((100 * currentDayOfYear) / totalYearDays).toFixed(6);
         // setting the element in the html
         elementProgressBarYear.style.width =String( parseInt(percentage)) + "%";
         labelProgressBarYear.textContent = percentage + " %";
