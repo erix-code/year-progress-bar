@@ -5,10 +5,14 @@ document.addEventListener("DOMContentLoaded", function() {
     // Elements
     const elementProgressBarYear = document.querySelector("#progress-bar-percentage-year")
     const elementProgressBarMonth = document.querySelector("#progress-bar-percentage-month")
+    const elementProgressBarWeek = document.querySelector("#progress-bar-percentage-week")
+    const elementProgressBarDay = document.querySelector("#progress-bar-percentage-day")
 
     // Labels
     const labelProgressBarYear = document.querySelector("#label-progress-bar-percentage-year");
     const labelProgressBarMonth = document.querySelector("#label-progress-bar-percentage-month");
+    const labelProgressBarWeek = document.querySelector("#label-progress-bar-percentage-week");
+    const labelProgressBarDay = document.querySelector("#label-progress-bar-percentage-day");
 
     console.log(labelProgressBarYear);
     function getYearPercentage() {
@@ -54,6 +58,40 @@ document.addEventListener("DOMContentLoaded", function() {
         elementProgressBarMonth.style.width =String( parseInt(percentage)) + "%";
         labelProgressBarMonth.textContent = format_percentage(percentage) + " %";
     }
+
+    function getWeekPercentage() {
+        // Get the current days in float
+        const currentTime = new Date();
+        // Get the day of the end of the month
+        const lastDateWeek = getLastDateWeek(currentTime);
+        const firstDateWeek = getFirstDateWeek(currentTime);
+
+        // diff form the last  to the first element
+        const diffLastFirst = lastDateWeek - firstDateWeek;
+        // diff from the current to the first element in the month
+        const diffCurrentFirst = currentTime - firstDateWeek;
+
+        const percentage = (100*diffCurrentFirst) / diffLastFirst;
+        // setting the element in the html
+        elementProgressBarWeek.style.width =String( parseInt(percentage)) + "%";
+        labelProgressBarWeek.textContent = format_percentage(percentage) + " %";
+
+    }
+    function getLastDateWeek(date) {
+        const dayDifference = 7 - date.getDay()
+        const lastDateWeek = new Date(date);
+        const curr = new Date(date);
+        lastDateWeek.setDate(curr.getDate() + dayDifference);
+        lastDateWeek.setHours(0, 0, 0,0);
+        return lastDateWeek;
+    }
+    function getFirstDateWeek(date) {
+        const firstDateWeek = new Date(date);
+        const curr = new Date(date);
+        firstDateWeek.setDate(curr.getDate() - date.getDay());
+        firstDateWeek.setHours(0, 0, 0,0);
+        return firstDateWeek;
+    }
     function format_percentage(percentage) {
         return parseFloat(percentage).toFixed(6);
     }
@@ -61,6 +99,7 @@ document.addEventListener("DOMContentLoaded", function() {
     setInterval(() => {
         getYearPercentage();
         getMonthPercentage();
+        getWeekPercentage();
     }, 500)
 
 });
