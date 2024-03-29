@@ -1,0 +1,7 @@
+.progress {
+    height: 35px;
+}
+
+.progress-bar-animated {
+    animation: 1s linear infinite progress-bar-stripes !important;
+}
