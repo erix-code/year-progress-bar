@@ -75,8 +75,33 @@ document.addEventListener("DOMContentLoaded", function() {
         // setting the element in the html
         elementProgressBarWeek.style.width =String( parseInt(percentage)) + "%";
         labelProgressBarWeek.textContent = format_percentage(percentage) + " %";
-
     }
+
+    function getDayPercentage() {
+        // Get the current days in float
+        const currentTime = new Date();
+
+        // Get the day of the end of the month
+        const initialDate = new Date(currentTime)
+        initialDate.setHours(0, 0,0,0);
+
+        // Setting next Date
+        const nextDate = new Date(initialDate);
+        nextDate.setDate(nextDate.getDate()+1);
+
+        // diff form the last  to the first element
+        const diffLastFirst = nextDate - initialDate;
+        console.log(diffLastFirst);
+        // // diff from the current to the first element in the month
+        const diffCurrentFirst = currentTime - initialDate;
+        console.log(diffCurrentFirst);
+        const percentage = (100*diffCurrentFirst) / diffLastFirst;
+        console.log(percentage);
+        // setting the element in the html
+        elementProgressBarDay.style.width =String( parseInt(percentage)) + "%";
+        labelProgressBarDay.textContent = format_percentage(percentage) + " %";
+    }
+
     function getLastDateWeek(date) {
         const dayDifference = 7 - date.getDay()
         const lastDateWeek = new Date(date);
@@ -100,6 +125,7 @@ document.addEventListener("DOMContentLoaded", function() {
         getYearPercentage();
         getMonthPercentage();
         getWeekPercentage();
+        getDayPercentage();
     }, 500)
 
 });
